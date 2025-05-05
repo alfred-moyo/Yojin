@@ -13,9 +13,16 @@ An AI-powered career development platform that helps users identify skill gaps, 
 
 ## Project Structure
 
-- `/client` - React frontend application
-- `/server` - Node.js Express backend API
+- `/client` - React frontend application with TypeScript
+- `/server` - Node.js Express backend API with TypeScript
 - `/ml-services` - Python-based ML microservices for AI tasks
+
+## Current Status
+
+The project is currently under active development:
+- Frontend: Basic React setup completed with TypeScript template
+- Backend: Express server with TypeScript, MongoDB connection, and user authentication setup
+- ML Services: To be implemented
 
 ## Getting Started
 
@@ -23,7 +30,7 @@ An AI-powered career development platform that helps users identify skill gaps, 
 
 - Node.js (v16+)
 - Python (3.8+)
-- MongoDB
+- MongoDB (running locally or cloud instance)
 
 ### Installation
 
@@ -39,31 +46,59 @@ npm install
 cd ../server
 npm install
 
-# ML Services
+# ML Services (Coming Soon)
 cd ../ml-services
-pip install -r requirements.txt
+pip install -r requirements.txt # Not yet implemented
 ```
 
-3. Set up environment variables (see .env.example files in each directory)
-4. Start the development servers
+### Environment Setup
 
-## Development
+Create a `.env` file in the server directory with the following configuration:
 
-### Starting the servers
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/career-co-pilot
+JWT_SECRET=your_secret_key_here
+```
+
+## Running the Application
+
+### Frontend
 
 ```bash
-# Frontend
 cd client
 npm start
-
-# Backend
-cd ../server
-npm run dev
-
-# ML Services
-cd ../ml-services
-python app.py
 ```
+This will start the React development server at http://localhost:3000
+
+### Backend
+
+You need to set up the package.json scripts first. In the server directory, update your package.json to include:
+
+```json
+"scripts": {
+  "start": "node dist/index.js",
+  "dev": "ts-node src/index.ts",
+  "build": "tsc",
+  "watch": "nodemon --exec ts-node src/index.ts"
+}
+```
+
+Then run:
+
+```bash
+cd server
+npm run dev
+```
+This will start the backend server at http://localhost:5000
+
+### ML Services
+
+The ML services are not yet implemented. This part will be developed to handle:
+- Resume parsing and analysis
+- Skill extraction and ranking
+- Job matching algorithms
+- Recommendation systems
 
 ## Deployment
 
