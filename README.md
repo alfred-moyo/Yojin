@@ -1,4 +1,4 @@
-# Career Co-Pilot
+# Yōjin
 
 An AI-powered career development platform that helps users identify skill gaps, discover personalized learning paths, and prepare for job opportunities.
 
