@@ -121,3 +121,156 @@ const Chatbot: React.FC = () => {
     }
   };
 
+
+  return (
+    <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+      <Paper elevation={3} sx={{ p: 0, overflow: 'hidden' }}>
+        {/* Chat Header */}
+        <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2 }}>
+          <Typography variant="h6">AI Career Assistant</Typography>
+          <Typography variant="body2">
+            Ask me anything about your career development
+          </Typography>
+        </Box>
+        
+        {/* Quick Prompts */}
+        <Box sx={{ p: 2, bgcolor: 'background.default' }}>
+          <Grid container spacing={1}>
+            {quickPrompts.map((prompt, index) => (
+              <Grid component="div" key={index}>
+                <Chip 
+                  label={prompt} 
+                  clickable
+                  onClick={() => handleSendMessage(prompt)}
+                  sx={{ mr: 1, mb: 1 }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+        
+        <Divider />
+        
+        {/* Chat Messages */}
+        <Box 
+          sx={{ 
+            height: '400px', 
+            overflowY: 'auto',
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {messages.map((message) => (
+            <Box
+              key={message.id}
+              sx={{
+                display: 'flex',
+                justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
+                mb: 2
+              }}
+            >
+              <Box sx={{ display: 'flex', maxWidth: '80%' }}>
+                {message.sender === 'bot' && (
+                  <Avatar sx={{ mr: 1, bgcolor: 'primary.main' }}>
+                    <BotIcon />
+                  </Avatar>
+                )}
+                <Box>
+                  <Paper
+                    elevation={1}
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      bgcolor: message.sender === 'user' ? 'primary.light' : 'grey.100',
+                      color: message.sender === 'user' ? 'white' : 'text.primary',
+                    }}
+                  >
+                    <Typography variant="body1">{message.text}</Typography>
+                  </Paper>
+                  <Typography 
+                    variant="caption" 
+                    color="text.secondary"
+                    sx={{ 
+                      display: 'block', 
+                      mt: 0.5, 
+                      textAlign: message.sender === 'user' ? 'right' : 'left'
+                    }}
+                  >
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </Typography>
+                </Box>
+                {message.sender === 'user' && (
+                  <Avatar sx={{ ml: 1, bgcolor: 'secondary.main' }}>
+                    <PersonIcon />
+                  </Avatar>
+                )}
+              </Box>
+            </Box>
+          ))}
+          
+          {isTyping && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                mb: 2
+              }}
+            >
+              <Box sx={{ display: 'flex' }}>
+                <Avatar sx={{ mr: 1, bgcolor: 'primary.main' }}>
+                  <BotIcon />
+                </Avatar>
+                <Paper
+                  elevation={1}
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    bgcolor: 'grey.100',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <CircularProgress size={20} sx={{ mr: 1 }} />
+                  <Typography variant="body1">Typing...</Typography>
+                </Paper>
+              </Box>
+            </Box>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </Box>
+        
+        <Divider />
+        
+        {/* Message Input */}
+        <Box sx={{ p: 2, display: 'flex' }}>
+          <TextField
+            fullWidth
+            placeholder="Type your message..."
+            variant="outlined"
+            size="small"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            disabled={isTyping}
+            multiline
+            maxRows={4}
+            sx={{ mr: 1 }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            endIcon={<SendIcon />}
+            onClick={() => handleSendMessage()}
+            disabled={!newMessage.trim() || isTyping}
+          >
+            Send
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
+  );
+};
+
+export default Chatbot;
