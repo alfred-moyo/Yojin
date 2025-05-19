@@ -147,3 +147,152 @@ const Dashboard: React.FC = () => {
           </Paper>
         </Grid>
 
+        {/* Top Skill Gaps */}
+        <Grid component="div" sx={{ gridColumn: { xs: 'span 12', md: 'span 8' } }}>
+          <Paper sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h6" gutterBottom>
+              Your Top Skill Gaps
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <Grid container spacing={2}>
+              {skillGaps.map((skill, index) => (
+                <Grid component="div" sx={{ gridColumn: { xs: 'span 12', sm: 'span 6' } }} key={index}>
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="body1">{skill.name}</Typography>
+                    <Box sx={{ 
+                      width: '100%', 
+                      bgcolor: 'grey.300',
+                      borderRadius: 5,
+                      height: 10,
+                      mt: 1
+                    }}>
+                      <Box sx={{ 
+                        width: `${skill.score}%`, 
+                        bgcolor: skill.score < 50 ? 'error.main' : skill.score < 75 ? 'warning.main' : 'success.main',
+                        borderRadius: 5,
+                        height: 10
+                      }} />
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                component={Link} 
+                to="/skills-analysis"
+                variant="outlined"
+              >
+                View Full Analysis
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Job Recommendations */}
+        <Grid component="div" sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Job Recommendations
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <Grid container spacing={2}>
+              {jobRecommendations.map((job, index) => (
+                <Grid component="div" sx={{ gridColumn: 'span 12' }} key={index}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography variant="h6" component="div">
+                        {job.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        {job.company}
+                      </Typography>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center'
+                      }}>
+                        <Typography variant="body2" sx={{ mr: 1 }}>
+                          Match:
+                        </Typography>
+                        <Box sx={{ 
+                          width: 60, 
+                          bgcolor: 'grey.300',
+                          borderRadius: 5,
+                          height: 8,
+                          mr: 1
+                        }}>
+                          <Box sx={{ 
+                            width: `${job.match}%`, 
+                            bgcolor: job.match < 70 ? 'warning.main' : 'success.main',
+                            borderRadius: 5,
+                            height: 8
+                          }} />
+                        </Box>
+                        <Typography variant="body2" fontWeight="bold">
+                          {job.match}%
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small">View Details</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                component={Link} 
+                to="/job-recommendations"
+                variant="outlined"
+              >
+                View All Jobs
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Course Recommendations */}
+        <Grid component="div" sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Learning Recommendations
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <Grid container spacing={2}>
+              {courseRecommendations.map((course, index) => (
+                <Grid component="div" sx={{ gridColumn: 'span 12' }} key={index}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography variant="h6" component="div">
+                        {course.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {course.platform} • {course.duration}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small">View Course</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                component={Link} 
+                to="/learning-recommendations"
+                variant="outlined"
+              >
+                View All Courses
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
+export default Dashboard;
+
